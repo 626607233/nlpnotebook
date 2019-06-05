@@ -17,8 +17,8 @@ GROUP_DICT = {
 	# '互相表扬': "https://www.douban.com/group/haogaoxiao/"
 }
 
-# 抓取前多少页
-MAX_PAGE = 500
+# 抓取哪些页
+PAGE = [0,20]
 
 # 爬虫时间间隔
 SPIDER_INTERVAL = 5
@@ -35,8 +35,10 @@ SQL_DICT = {
 }
 
 # 代理池地址
+# redis
 # PROXY_POOL_URL = 'http://localhost:5555/random'
-PROXY_POOL_URL = 'http://http.tiqu.alicdns.com/getip3?num=1&type=3&pro=0&city=0&yys=100017&port=1&pack=54305&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions=&gm=4'
+# 芝麻代理 隧道IP
+PROXY_POOL_URL = 'http://http.tiqu.alicdns.com/getip3?num=1&type=3&pro=0&city=0&yys=100017&port=1&pack=54305&ts=0&ys=0&cs=0&lb=6&sb=0&pb=4&mr=1&regions='
 
 # 代理访问重试次数
 MAX_GET_RETRY = 20

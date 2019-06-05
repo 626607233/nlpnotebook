@@ -2,7 +2,7 @@
 
 import pandas as pd
 from bs4 import BeautifulSoup
-from config import GROUP_DICT, MAX_PAGE, SQL_DICT, HEADERS, PROXY_POOL_URL, MAX_GET_RETRY, OUTPUT_PATH, SPIDER_INTERVAL
+from config import GROUP_DICT, PAGE, SQL_DICT, HEADERS, PROXY_POOL_URL, MAX_GET_RETRY, OUTPUT_PATH, SPIDER_INTERVAL
 from base import _Sql_Base
 import requests
 import emoji
@@ -40,7 +40,7 @@ class Douban_corpus_spider(_Sql_Base):
     def __init__(self, is_proxy = False):
 
         self.GROUP_DICT = GROUP_DICT
-        self.MAX_PAGE = MAX_PAGE
+        self.PAGE = PAGE
         self.sql_engine = self.create_engine(SQL_DICT)
         self.is_proxy = is_proxy
         if is_proxy:
@@ -112,11 +112,13 @@ class Douban_corpus_spider(_Sql_Base):
             page_comments.append(item.contents[2].replace(' ','').replace('\n',''))
         return page_author_diag, page_comments
 
-    def spider_group(self, group, max_page):
+    def spider_group(self, group, page):
+        min_page = page[0]
+        max_page = page[1]
         spider_outputs = {}
         link_list = []
         title_list = []
-        for page in range(max_page):
+        for page in range(min_page, max_page):
             link_list_page, title_list_page = self.spider_links(group, page)            
             link_list = link_list + link_list_page
             title_list = title_list + title_list_page
