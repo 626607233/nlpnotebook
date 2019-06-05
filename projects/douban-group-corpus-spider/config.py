@@ -18,7 +18,7 @@ GROUP_DICT = {
 }
 
 # 抓取哪些页
-PAGE = [0,20]
+PAGE = [0,200]
 
 # 爬虫时间间隔
 SPIDER_INTERVAL = 5
