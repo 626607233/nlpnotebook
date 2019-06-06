@@ -1,3 +1,4 @@
+
 # coding: utf-8
 
 import pandas as pd
@@ -11,6 +12,8 @@ import random
 import logging
 import os
 import argparse
+import re
+
 
 class HTTPError(Exception):
 
@@ -81,7 +84,7 @@ class Douban_corpus_spider(_Sql_Base):
             if response.status_code == 200:
                 print('proxy: %s' %response.text)
 #                 time.sleep(1)
-                return "http://%s" %response.text
+                return re.sub( '[\\r\\n]+', '',"http://%s" %response.text)
         except ConnectionError:
             return None
 
@@ -119,18 +122,18 @@ class Douban_corpus_spider(_Sql_Base):
         link_list = []
         title_list = []
         for page in range(min_page, max_page):
-            link_list_page, title_list_page = self.spider_links(group, page)            
-            link_list = link_list + link_list_page
-            title_list = title_list + title_list_page
-        for link in link_list:
-            try:
-                spider_outputs[link] = {}
-                spider_outputs[link]['title'] = title_list[link_list.index(link)]
-                spider_outputs[link]['author_diag'], spider_outputs[link]['comments'] = self.spider_page(link)
-                self.json_write(spider_outputs, os.path.join(OUTPUT_PATH, '{}.json'.format(group)))
-            except:
-                print('%s fail' %link)
-                continue        
+            output_page = {}
+            link_list_page, title_list_page = self.spider_links(group, page)
+            for link in link_list_page:
+                try:
+                    spider_outputs[link] = {}
+                    spider_outputs[link]['title'] = title_list_page[link_list_page.index(link)]
+                    spider_outputs[link]['author_diag'], spider_outputs[link]['comments'] = self.spider_page(link)
+                    output_page[link] = spider_outputs[link]
+                except:
+                    print('%s fail' %link)
+                    continue
+            self.json_write(output_page, os.path.join(OUTPUT_PATH, '{}_{}.json'.format(group,page)))      
         return spider_outputs
 
     def group_dict_transfer(self, output_dict):
@@ -145,7 +148,7 @@ class Douban_corpus_spider(_Sql_Base):
 
     def run(self):
         for group in self.GROUP_DICT.keys():
-            output_dict = self.spider_group(group, self.MAX_PAGE)
+            output_dict = self.spider_group(group, self.PAGE)
             output_table = self.group_dict_transfer(output_dict)
             self.table_save(output_table, group)
 
