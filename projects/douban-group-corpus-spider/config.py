@@ -38,7 +38,18 @@ SQL_DICT = {
 # redis
 # PROXY_POOL_URL = 'http://localhost:5555/random'
 # 芝麻代理 隧道IP
-PROXY_POOL_URL = 'http://http.tiqu.alicdns.com/getip3?num=1&type=3&pro=0&city=0&yys=100017&port=1&pack=54305&ts=0&ys=0&cs=0&lb=6&sb=0&pb=4&mr=1&regions='
+PROXY_POOL_URL = 'http://http.tiqu.alicdns.com/getip3?num=1&type=3&pro=0&city=0&yys=0&port=1&time=1&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
 
 # 代理访问重试次数
 MAX_GET_RETRY = 20
+
+"""
+运行
+"""
+
+# 后台运行
+# nohup python spider.py --proxy 1 > spider.log 2>&1 &
+# 修改config.py
+# vi config.py
+# 退出vi
+# ESC + shift: + wq!

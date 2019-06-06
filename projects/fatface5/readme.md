@@ -95,3 +95,4 @@ https://github.com/qhduan/ConversationalRobotDesign
 
 https://github.com/zhihao-chen/QASystemOnMedicalGraph
 
+https://github.com/sfyc23/EverydayWechat

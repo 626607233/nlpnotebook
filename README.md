@@ -169,6 +169,10 @@ Levenshtein Distance：字符串相似度算法，纠正错误拼写
 
 - 静觅：崔庆才的博客 https://cuiqingcai.com/
 
+Transformer:
+
+- [放弃幻想，全面拥抱Transformer：自然语言处理三大特征抽取器（CNN/RNN/TF）比较](https://mp.weixin.qq.com/s?__biz=MjM5ODkzMzMwMQ==&mid=2650409023&idx=1&sn=88388c663ae5224b19b6b93f1d143a59&chksm=becd8e6589ba0773f9a4cd2b5e5da76974f437d27e6104df32decc7ad560cd4b99b3ea3199c2&scene=21#wechat_redirect)
+
 BERT：
 
 - 团队预训练好的[BERT-base Chinese](https://storage.googleapis.com/bert_models/2018_11_03/chinese_L-12_H-768_A-12.zip)模型（364.20MB）

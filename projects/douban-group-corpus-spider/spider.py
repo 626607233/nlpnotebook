@@ -97,7 +97,7 @@ class Douban_corpus_spider(_Sql_Base):
         for item in list_:
             try:
                 page_link.append(item.find('a').get('href'))
-                page_title.append(item.find('a').get('title'))
+                page_title.append(emoji.demojize(item.find('a').get('title')))
             except:
                 continue
         return page_link, page_title
@@ -108,11 +108,11 @@ class Douban_corpus_spider(_Sql_Base):
         page_author_diag = []
         for item in soup.find(class_="note-content paper").find_all('p'):
             if len(item) > 0:
-                page_author_diag.append(item.contents[0])
+                page_author_diag.append(emoji.demojize(item.contents[0]))
         list_ = soup.find_all(class_ = 'content')
         page_comments = []
         for item in list_:
-            page_comments.append(item.contents[2].replace(' ','').replace('\n',''))
+            page_comments.append(emoji.demojize(item.contents[2].replace(' ','').replace('\n','')))
         return page_author_diag, page_comments
 
     def spider_group(self, group, page):
@@ -142,8 +142,6 @@ class Douban_corpus_spider(_Sql_Base):
         data = data.reset_index(drop = True)[['link','title','author_diag','comments']]
         data['author_diag'] = data['author_diag'].apply(lambda x: x[0] if x else '')
         data['comments'] = data['comments'].apply(lambda x: '|'.join(x))
-        for col in ['title','author_diag','comments']:
-            data[col] = data[col].apply(emoji.demojize)
         return data
 
     def run(self):
